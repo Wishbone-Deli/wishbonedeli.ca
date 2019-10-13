@@ -1,0 +1,44 @@
+{
+  "name": "wishbonedeli.ca",
+  "version": "1.0.0",
+  "description": "Website for Wishbone Delicatessen!",
+  "main": "index.js",
+  "scripts": {
+    "build": "next build",
+    "dev": "next",
+    "lint": "eslint \"**/*.{ts,tsx}\"",
+    "prettier": "prettier --write \"**/*.{ts,tsx}\"",
+    "start": "next start",
+    "test": "yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wishbone-Deli/wishbonedeli.ca.git"
+  },
+  "author": "shimks",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Wishbone-Deli/wishbonedeli.ca/issues"
+  },
+  "homepage": "https://github.com/Wishbone-Deli/wishbonedeli.ca#readme",
+  "dependencies": {
+    "next": "^9.1.1",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.12",
+    "@types/react": "^16.9.5",
+    "@typescript-eslint/eslint-plugin": "^2.3.3",
+    "@typescript-eslint/parser": "^2.3.3",
+    "eslint": "^6.5.1",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "prettier": "^1.18.2",
+    "typescript": "^3.6.4"
+  }
+}
