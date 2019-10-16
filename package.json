@@ -22,7 +22,12 @@
   },
   "homepage": "https://github.com/Wishbone-Deli/wishbonedeli.ca#readme",
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "@fortawesome/react-fontawesome": "^0.1.6",
+    "@zeit/next-sass": "^1.0.1",
     "next": "^9.1.1",
+    "node-sass": "^4.12.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2"
   },
