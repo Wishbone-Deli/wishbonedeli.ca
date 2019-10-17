@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { FC, useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,7 @@ import '../styles/style.scss';
 
 config.autoAddCss = false;
 
-const Navbar: FunctionComponent = () => {
+const Navbar: FC = () => {
   const [burger, setBurger] = useState(false);
 
   const burgerToggle = (): void => {
