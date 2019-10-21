@@ -1,16 +1,13 @@
-import React, { PropsWithChildren } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { shallow, ShallowWrapper } from 'enzyme';
 import Navbar from '../../components/Navbar';
-import ActiveLink, { ActiveLinkProps } from '../../components/ActiveLink';
 
 describe('<Navbar />', () => {
   let wrapper: ShallowWrapper;
-  let activeLinks: ShallowWrapper<PropsWithChildren<ActiveLinkProps>>;
 
   beforeEach(() => {
     wrapper = shallow(<Navbar />);
-    activeLinks = wrapper.find(ActiveLink);
   });
 
   describe('content', () => {
@@ -20,7 +17,32 @@ describe('<Navbar />', () => {
     });
   });
 
-  it('renders ActiveLink Home with link to /', () => {
-    expect(activeLinks.prop('href')).toBe('/');
+  describe('onToggle', () => {
+    const toggleClass = 'navbar__hamburger--show';
+    let hamburgerWrapper: ShallowWrapper;
+    let ulWrapper: ShallowWrapper;
+
+    beforeEach(() => {
+      hamburgerWrapper = wrapper.find('.navbar__hamburger');
+      ulWrapper = wrapper.find('ul');
+    });
+
+    it('appends navbar__hamburger-show class to <ul>', () => {
+      expect(ulWrapper.hasClass(toggleClass)).toBe(false);
+
+      hamburgerWrapper.simulate('click');
+      ulWrapper = wrapper.find('ul');
+      expect(ulWrapper.hasClass(toggleClass)).toBe(true);
+    });
+
+    it('removes navbar__hamburger-show class from <ul>', () => {
+      hamburgerWrapper.simulate('click');
+      wrapper.update();
+      expect(ulWrapper.hasClass(toggleClass)).toBe(true);
+
+      hamburgerWrapper.simulate('click');
+      wrapper.update();
+      expect(ulWrapper.hasClass(toggleClass)).toBe(false);
+    });
   });
 });
