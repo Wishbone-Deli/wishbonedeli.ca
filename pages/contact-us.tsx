@@ -1,16 +1,16 @@
 import React, { FunctionComponent } from 'react';
-import Home from '../src/components/Home';
+import ContactUs from '../src/components/ContactUs';
 import Layout from '../src/components/Layout';
 
-const HomePage: FunctionComponent = () => {
-  const title = 'Wishbone Deli | Home';
+const ContactUsPage: FunctionComponent = () => {
+  const title = 'Wishbone Deli | Contact Us';
   const description = ''; // todo
 
   return (
     <Layout title={title} description={description}>
-      <Home />
+      <ContactUs />
     </Layout>
   );
 };
 
-export { HomePage as default };
+export { ContactUsPage as default };

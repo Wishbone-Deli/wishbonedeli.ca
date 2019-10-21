@@ -1,16 +1,24 @@
 import React, { ReactNode, FC } from 'react';
+import { NextSeo } from 'next-seo';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
-type LayoutProps = {
+export type LayoutProps = {
+  title: string;
+  description: string;
   children: ReactNode;
 };
 
-const Layout: FC<LayoutProps> = (props: LayoutProps) => {
+const Layout: FC<LayoutProps> = ({
+  title,
+  description,
+  children,
+}: LayoutProps) => {
   return (
     <>
+      <NextSeo title={title} description={description} />
       <Navbar />
-      {props.children}
+      {children}
       <Footer />
     </>
   );

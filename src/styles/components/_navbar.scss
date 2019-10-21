@@ -33,11 +33,13 @@
   color: $primary-color-light;
 }
 
-.navbar__link--active {
+.navbar__link--active,
+.navbar__link--active:hover {
   color: $grey;
 }
 
-.navbar__title {
+.navbar__title,
+.navbar__title:hover {
   color: $white;
   font-size: $sm-size;
   font-weight: bold;

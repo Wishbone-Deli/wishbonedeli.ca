@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router';
 import Link, { LinkProps } from 'next/link';
-import React, { Children, FC, ReactElement } from 'react';
+import React, { Children, FC, ReactElement, cloneElement } from 'react';
 
-type ActiveLinkProps = LinkProps & {
+export type ActiveLinkProps = LinkProps & {
   children: ReactElement;
   activeClassName: string;
 };
@@ -20,7 +20,7 @@ const ActiveLink: FC<ActiveLinkProps> = ({
       ? `${child.props.className} ${activeClassName}`
       : child.props.className;
 
-  return <Link {...props}>{React.cloneElement(child, { className })}</Link>;
+  return <Link {...props}>{cloneElement(child, { className })}</Link>;
 };
 
 export default ActiveLink;

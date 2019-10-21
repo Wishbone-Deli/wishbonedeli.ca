@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { config } from '@fortawesome/fontawesome-svg-core';
-import ActiveLink from '../utils/ActiveLink';
+import ActiveLink from './ActiveLink';
 import '../styles/style.scss';
 
 config.autoAddCss = false;
@@ -24,7 +24,6 @@ const Navbar: FC = () => {
           </Link>
           <div className="navbar__hamburger" onClick={burgerToggle}>
             <FontAwesomeIcon icon={faBars} />
-            {/* might need to use icon instead */}
           </div>
           <ul
             className={
