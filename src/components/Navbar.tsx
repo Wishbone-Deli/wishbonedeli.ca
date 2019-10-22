@@ -27,7 +27,7 @@ const Navbar: FC = () => {
           </div>
           <ul
             className={
-              'navbar__links' + (burger ? ' navbar__hamburger-show' : '')
+              'navbar__links' + (burger ? ' navbar__hamburger--show' : '')
             }
           >
             <li>

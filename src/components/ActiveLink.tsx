@@ -7,6 +7,10 @@ export type ActiveLinkProps = LinkProps & {
   activeClassName: string;
 };
 
+/**
+ * When next/router detects the component's link is the current route,
+ * appends activeClassName to its child
+ */
 const ActiveLink: FC<ActiveLinkProps> = ({
   children,
   activeClassName,

@@ -27,7 +27,7 @@ describe('<Navbar />', () => {
       ulWrapper = wrapper.find('ul');
     });
 
-    it('appends navbar__hamburger-show class to <ul>', () => {
+    it('appends navbar__hamburger--show class to <ul>', () => {
       expect(ulWrapper.hasClass(toggleClass)).toBe(false);
 
       hamburgerWrapper.simulate('click');
@@ -35,13 +35,14 @@ describe('<Navbar />', () => {
       expect(ulWrapper.hasClass(toggleClass)).toBe(true);
     });
 
-    it('removes navbar__hamburger-show class from <ul>', () => {
+    it('removes navbar__hamburger--show class from <ul>', () => {
       hamburgerWrapper.simulate('click');
-      wrapper.update();
+      ulWrapper = wrapper.find('ul');
       expect(ulWrapper.hasClass(toggleClass)).toBe(true);
 
+      hamburgerWrapper = wrapper.find('.navbar__hamburger');
       hamburgerWrapper.simulate('click');
-      wrapper.update();
+      ulWrapper = wrapper.find('ul');
       expect(ulWrapper.hasClass(toggleClass)).toBe(false);
     });
   });

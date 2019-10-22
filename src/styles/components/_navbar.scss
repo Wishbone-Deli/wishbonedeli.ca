@@ -56,7 +56,7 @@
   margin: auto $s-size;
 }
 
-.navbar__hamburger-show {
+.navbar__hamburger--show {
   display: initial;
   position: absolute;
   top: $navbar-height;
@@ -84,7 +84,7 @@
     display: none;
   }
 
-  .navbar__hamburger-show {
+  .navbar__hamburger--show {
     position: static;
     width: auto;
   }
