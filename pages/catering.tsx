@@ -1,14 +1,14 @@
 import React, { FunctionComponent } from 'react';
-import Home from '../src/components/Home';
+import Catering from '../src/components/Catering';
 import Layout from '../src/components/Layout';
 
 const HomePage: FunctionComponent = () => {
-  const title = 'Wishbone Deli | Home';
+  const title = 'Wishbone Deli | Catering';
   const description = ''; // todo
 
   return (
     <Layout title={title} description={description}>
-      <Home />
+      <Catering />
     </Layout>
   );
 };

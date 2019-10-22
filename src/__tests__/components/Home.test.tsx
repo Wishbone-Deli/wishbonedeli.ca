@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import Home from "../../components/Home";
-import { shallow, ShallowWrapper } from "enzyme";
+import Home from '../../components/Home';
+import { shallow, ShallowWrapper } from 'enzyme';
 
-describe("<Home />", () => {
+describe('<Home />', () => {
   let wrapper: ShallowWrapper;
 
   beforeEach(() => {
     wrapper = shallow(<Home />);
   });
 
-  it("displays a greeting message", () => {
+  it('displays a greeting message', () => {
     expect(wrapper.text()).toMatch(/Hello world!/);
   });
 });
