@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import ContactUs from './ContactUs';
 
 const Home: FC = () => {
   return (
@@ -22,7 +23,7 @@ const Home: FC = () => {
           <button>See our menu</button>
         </div>
         <div>
-          <h3>Catering. For all occasions.</h3>
+          <h3>Catering for all occasions.</h3>
           <p>
             Got mouths to feed? We got you covered with a huge assortment of
             freshly prepared trays for everyone.
@@ -36,14 +37,24 @@ const Home: FC = () => {
         <div>
           <div>
             <h3>Daily Special</h3>
+            <h2>THE SPECIAL</h2>
           </div>
+          <div>PICTURE HERE</div>
         </div>
         <div>
           <div>
             <h3>Daily Soups</h3>
+            <h2>THE SOUP NAME 1</h2>
+            <h2>THE SOUP NAME 2</h2>
           </div>
+          <div>SOUP PICTURE 1</div>
+          <div>SOUP PICTURE 2</div>
         </div>
       </section>
+
+      <section>GALLERY</section>
+
+      <ContactUs />
     </div>
   );
 };
