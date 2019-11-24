@@ -1,5 +1,5 @@
 import React, { ReactElement, Component } from 'react';
-import { render, fireEvent, waitForElement } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import ContactUs from '../../components/ContactUs';
 
 jest.mock('react-google-recaptcha', () => {
@@ -28,7 +28,7 @@ describe('<ContactUs>', () => {
 
     describe('not valid', () => {
       it('displays an error if the endpoint fails to send the message', async () => {
-        const { getByRole, getByText, getByLabelText } = render(<ContactUs />);
+        const { getByRole, findByText, getByLabelText } = render(<ContactUs />);
 
         fakeFetch.mockImplementation(() => Promise.resolve({ status: 400 }));
 
@@ -42,11 +42,11 @@ describe('<ContactUs>', () => {
         });
         fireEvent.click(getByRole('button'));
 
-        await waitForElement(() => getByText(/something went wrong/i));
+        await findByText(/something went wrong/i);
       });
 
       it('displays an error if fails to send a request', async () => {
-        const { getByRole, getByText, getByLabelText } = render(<ContactUs />);
+        const { getByRole, findByText, getByLabelText } = render(<ContactUs />);
 
         fakeFetch.mockImplementation(() => Promise.reject(new Error()));
 
@@ -60,40 +60,136 @@ describe('<ContactUs>', () => {
         });
         fireEvent.click(getByRole('button'));
 
-        await waitForElement(() => getByText(/something went wrong/i));
+        await findByText(/something went wrong/i);
       });
     });
 
-    it('sends a request to the contact us endpoint', async () => {
-      const { getByRole, getByText, getByLabelText } = render(<ContactUs />);
+    describe('with valid inputs', () => {
+      beforeEach(() => {
+        fakeFetch.mockImplementation(() => Promise.resolve({ status: 200 }));
+      });
 
-      fakeFetch.mockImplementation(() => Promise.resolve({ status: 200 }));
-
-      const expectedEndpoint = 'http://localhost:3000/message';
-      const expectedRequest = {
-        method: 'POST',
-        body: JSON.stringify({ name, phoneNumber, email, text }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      const expectCorrectRequest = (
+        fetchMock: jest.Mock,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        expectedRequest: any,
+        expectedEndpoint: string,
+      ): void => {
+        expect(fetchMock.mock.calls[0][0]).toBe(expectedEndpoint);
+        (Object.keys(expectedRequest) as Array<
+          keyof typeof expectedRequest
+        >).forEach(key => {
+          if (key !== 'body') {
+            expect(fetchMock.mock.calls[0][1][key]).toEqual(
+              expectedRequest[key],
+            );
+          }
+        });
+        expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toEqual(
+          JSON.parse(expectedRequest.body),
+        );
       };
 
-      fireEvent.change(getByLabelText('Name'), { target: { value: name } });
-      fireEvent.change(getByLabelText('Phone Number'), {
-        target: { value: phoneNumber },
-      });
-      fireEvent.change(getByLabelText('Email'), { target: { value: email } });
-      fireEvent.change(getByLabelText('Message'), {
-        target: { value: text },
-      });
-      fireEvent.click(getByRole('button'));
+      it('sends a request to the contact us endpoint', async () => {
+        const { getByRole, getByLabelText, getByTestId, findByText } = render(
+          <ContactUs />,
+        );
 
-      await waitForElement(() =>
-        getByText(/thank you! we will get back to you/i),
-      );
+        const expectedEndpoint = 'http://localhost:3000/message';
+        const expectedRequest = {
+          method: 'POST',
+          body: JSON.stringify({ name, phoneNumber, email, text }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
 
-      expect(fakeFetch.mock.calls[0][0]).toBe(expectedEndpoint);
-      expect(fakeFetch.mock.calls[0][1]).toEqual(expectedRequest);
+        const spinner = getByTestId('spinner');
+        expect(spinner).toBeEmpty();
+
+        fireEvent.change(getByLabelText('Name'), { target: { value: name } });
+        fireEvent.change(getByLabelText('Phone Number'), {
+          target: { value: phoneNumber },
+        });
+        fireEvent.change(getByLabelText('Email'), { target: { value: email } });
+        fireEvent.change(getByLabelText('Message'), {
+          target: { value: text },
+        });
+        fireEvent.click(getByRole('button'));
+
+        expect(spinner).not.toBeEmpty();
+
+        await findByText(/thank you! we will get back to you/i);
+        expect(spinner).toBeEmpty();
+
+        expectCorrectRequest(fakeFetch, expectedRequest, expectedEndpoint);
+      });
+
+      it('sends a request to the contact us endpoint without name', async () => {
+        const { getByRole, findByText, getByLabelText, getByTestId } = render(
+          <ContactUs />,
+        );
+
+        const expectedEndpoint = 'http://localhost:3000/message';
+        const expectedRequest = {
+          method: 'POST',
+          body: JSON.stringify({ phoneNumber, email, text }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+
+        const spinner = getByTestId('spinner');
+        expect(spinner).toBeEmpty();
+
+        fireEvent.change(getByLabelText('Phone Number'), {
+          target: { value: phoneNumber },
+        });
+        fireEvent.change(getByLabelText('Email'), { target: { value: email } });
+        fireEvent.change(getByLabelText('Message'), {
+          target: { value: text },
+        });
+        fireEvent.click(getByRole('button'));
+
+        expect(spinner).not.toBeEmpty();
+
+        await findByText(/thank you! we will get back to you/i);
+        expect(spinner).toBeEmpty();
+
+        expectCorrectRequest(fakeFetch, expectedRequest, expectedEndpoint);
+      });
+
+      it('sends a request to the contact us endpoint without phone number', async () => {
+        const { getByRole, findByText, getByLabelText, getByTestId } = render(
+          <ContactUs />,
+        );
+
+        const expectedEndpoint = 'http://localhost:3000/message';
+        const expectedRequest = {
+          method: 'POST',
+          body: JSON.stringify({ name, email, text }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        };
+
+        const spinner = getByTestId('spinner');
+        expect(spinner).toBeEmpty();
+
+        fireEvent.change(getByLabelText('Name'), { target: { value: name } });
+        fireEvent.change(getByLabelText('Email'), { target: { value: email } });
+        fireEvent.change(getByLabelText('Message'), {
+          target: { value: text },
+        });
+        fireEvent.click(getByRole('button'));
+
+        expect(spinner).not.toBeEmpty();
+
+        await findByText(/thank you! we will get back to you/i);
+        expect(spinner).toBeEmpty();
+
+        expectCorrectRequest(fakeFetch, expectedRequest, expectedEndpoint);
+      });
     });
   });
 });
