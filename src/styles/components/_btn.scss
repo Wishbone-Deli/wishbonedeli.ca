@@ -1,0 +1,15 @@
+.btn {
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  font-size: $s-size;
+  margin: $m-size 0;
+  padding: $xs-size $m-size;
+  text-align: center;
+}
+
+.btn--submit {
+  background: $primary-color;
+  color: $white;
+  width: 100%;
+}

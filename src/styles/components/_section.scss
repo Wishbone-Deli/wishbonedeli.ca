@@ -1,0 +1,45 @@
+.section {
+  margin: 0 $s-size;
+  text-align: center;
+}
+
+.section__divider {
+  align-items: center;
+  display: grid;
+  column-gap: $l-size;
+  justify-content: center;
+}
+
+.section__title {
+  color: $primary-color;
+  font-size: $m-size;
+  font-weight: bold;
+  margin: $s-size 0;
+  text-align: center;
+}
+
+.section__subtitle {
+  font-size: $sm-size;
+  padding: 0 $s-size;
+}
+
+.section__description {
+  color: $light-black;
+  font-size: $s-size;
+  margin: $m-size 0;
+  padding: 0 $s-size;
+}
+
+.section__table {
+  margin: $m-size 0;
+}
+
+@media (min-width: $desktop-breakpoint) {
+  .section__divider--2-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section__divider-element:last-child {
+    text-align: left;
+  }
+}
