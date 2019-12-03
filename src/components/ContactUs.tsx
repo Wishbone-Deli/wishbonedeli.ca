@@ -2,6 +2,7 @@ import React, { FC, useState, ChangeEvent, FormEvent, createRef } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import Fadeloader from 'react-spinners/FadeLoader';
 import GoogleMapReact, { Coords, Props } from 'google-map-react';
+import moment from 'moment';
 import { Message } from '../server/message';
 
 const ContactUs: FC = () => {
@@ -176,16 +177,26 @@ const ContactUs: FC = () => {
 
               <h2 className="section__subtitle">Hours</h2>
               <div className="section__description">
-                <table className="section__table">
+                <table className="table">
+                  {/* TODO: tests */}
                   <tbody>
-                    <tr>
-                      <td>Monday - Friday</td>
-                      <td>7:30 AM - 3:00 PM</td>
-                    </tr>
-                    <tr>
-                      <td>Saturday - Sunday</td>
-                      <td>CLOSED</td>
-                    </tr>
+                    {Array.from(Array(7).keys()).map((day: number) => (
+                      <tr
+                        className={`table__row${
+                          day === moment().day() ? ' table__row--current' : ''
+                        }`}
+                        key={day}
+                      >
+                        <td className="table__entry">
+                          {moment()
+                            .day(day)
+                            .format('dddd')}
+                        </td>
+                        <td className="table__entry">
+                          {day >= 1 && day < 6 ? '7:30 AM - 3:00 PM' : 'CLOSED'}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
                 Please note that we are closed on public holidays.
