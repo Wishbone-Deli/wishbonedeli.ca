@@ -1,0 +1,60 @@
+.daily-specials {
+  background: $primary-color-light;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  justify-content: center;
+}
+
+.daily-specials:nth-child(even) {
+  background: $grey;
+}
+
+.daily-specials__content {
+}
+
+// TODO: allow images to maintain their scale
+// the workaround: use images with consistent scaling
+.daily-specials__content--img {
+  display: block;
+  min-height: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.daily-specials__content--img-container {
+  position: relative;
+}
+
+.daily-specials__content--img-label {
+  background: $primary-color;
+  display: inline-block;
+  color: $white;
+  font-size: $s-size;
+  padding: $xxs-size;
+  position: absolute;
+  text-transform: uppercase;
+}
+
+.daily-specials__content--title {
+  align-self: center;
+  font-size: $sm-size;
+  margin: $s-size 0;
+  text-align: center;
+}
+
+@media (min-width: $desktop-breakpoint) {
+  .daily-specials {
+    grid-template-columns: repeat(auto-fit, minmax($desktop-breakpoint/4, 1fr));
+    grid-template-rows: 1fr;
+  }
+
+  .daily-specials:nth-child(even) > .daily-specials__content:first-child {
+    order: 1;
+  }
+
+  .daily-specials__content--title {
+    font-size: $m-size;
+    font-weight: bold;
+  }
+}

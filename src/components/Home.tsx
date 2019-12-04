@@ -1,7 +1,23 @@
 import React, { FC } from 'react';
+import DailySpecials from './DailySpecials';
 import ContactUs from './ContactUs';
 
 const Home: FC = () => {
+  const dailySpecials = {
+    1: ['shepherds-pie'],
+    2: ['sweet-and-sour-chicken'],
+    3: ['quiche'],
+    4: ['lasagna'],
+    5: ['spicy-pork'],
+  };
+  const dailySoups = {
+    1: ['beef-barley', 'corn-chowder', 'minestrone'],
+    2: ['chicken-noodle', 'cream-of-mushroom'],
+    3: ['beef-noodle', 'minestrone', 'cream-of-potato'],
+    4: ['lemon-chicken-rice', 'cream-of-broccoli'],
+    5: ['pea-and-ham', 'minestrone'],
+  };
+
   return (
     <div>
       <header>
@@ -34,21 +50,9 @@ const Home: FC = () => {
       </section>
 
       <section>
-        <div>
-          <div>
-            <h3>Daily Special</h3>
-            <h2>THE SPECIAL</h2>
-          </div>
-          <div>PICTURE HERE</div>
-        </div>
-        <div>
-          <div>
-            <h3>Daily Soups</h3>
-            <h2>THE SOUP NAME 1</h2>
-            <h2>THE SOUP NAME 2</h2>
-          </div>
-          <div>SOUP PICTURE 1</div>
-          <div>SOUP PICTURE 2</div>
+        <div className="container">
+          <DailySpecials type="Specials" {...dailySpecials} />
+          <DailySpecials type="Soups" {...dailySoups} />
         </div>
       </section>
 
