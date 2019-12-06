@@ -1,13 +1,17 @@
 .daily-specials {
-  background: $primary-color-light;
+  background: linear-gradient(
+      change-color($white, $alpha: 0.7),
+      change-color($white, $alpha: 0.7)
+    ),
+    url('/backgrounds/special-today.jpg') no-repeat center center/cover;
+  margin: $m-size 0;
+}
+
+.daily-specials__grid {
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
   justify-content: center;
-}
-
-.daily-specials:nth-child(even) {
-  background: $grey;
 }
 
 .daily-specials__content {
@@ -44,12 +48,12 @@
 }
 
 @media (min-width: $desktop-breakpoint) {
-  .daily-specials {
+  .daily-specials__grid {
     grid-template-columns: repeat(auto-fit, minmax($desktop-breakpoint/4, 1fr));
     grid-template-rows: 1fr;
   }
 
-  .daily-specials:nth-child(even) > .daily-specials__content:first-child {
+  .daily-specials:nth-child(even) .daily-specials__content--title:first-child {
     order: 1;
   }
 
@@ -58,3 +62,6 @@
     font-weight: bold;
   }
 }
+
+// darken (maybe not?) section__content-title
+// get rid of text-wrap on the overlayed content buttons

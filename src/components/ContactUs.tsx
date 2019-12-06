@@ -76,7 +76,7 @@ const ContactUs: FC = () => {
   };
 
   return (
-    <section>
+    <section id="contact-us">
       <div className="section">
         <div className="container">
           <h2 className="section__title">Contact Us</h2>

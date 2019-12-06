@@ -21,24 +21,26 @@ const DailySpecials: FC<DailySpecialsProps> = (props: DailySpecialsProps) => {
 
   return (
     <div className="daily-specials">
-      <h2 className="daily-specials__content daily-specials__content--title">
-        Daily {props.type}
-      </h2>
-      {menuToday.map((item: string) => (
-        <div
-          key={item}
-          className="daily-specials__content daily-specials__content--img-container"
-        >
-          <h3 className="daily-specials__content daily-specials__content--img-label">
-            {titularize(item)}
-          </h3>
-          <img
-            src={`./${subdir}/${item}.jpg`}
-            alt={item}
-            className="daily-specials__content daily-specials__content--img"
-          />
-        </div>
-      ))}
+      <div className="daily-specials__grid">
+        <h2 className="daily-specials__content daily-specials__content--title">
+          Daily {props.type}
+        </h2>
+        {menuToday.map((item: string) => (
+          <div
+            key={item}
+            className="daily-specials__content daily-specials__content--img-container"
+          >
+            <h3 className="daily-specials__content daily-specials__content--img-label">
+              {titularize(item)}
+            </h3>
+            <img
+              src={`./${subdir}/${item}.jpg`}
+              alt={item}
+              className="daily-specials__content daily-specials__content--img"
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

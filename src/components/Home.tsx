@@ -5,7 +5,7 @@ import ContactUs from './ContactUs';
 const Home: FC = () => {
   const dailySpecials = {
     1: ['shepherds-pie'],
-    2: ['sweet-and-sour-chicken'],
+    2: ['sweet-sour-chicken'],
     3: ['quiche'],
     4: ['lasagna'],
     5: ['spicy-pork'],
@@ -20,32 +20,59 @@ const Home: FC = () => {
 
   return (
     <div>
-      <header>
-        <div>
-          <div>
-            <h1>Fresh, down to its bone</h1>
-            <h2>Serving you a supreme local deli experience in Kingston</h2>
+      <header className="header">
+        <div className="container">
+          <div className="header__content">
+            <h1 className="header__content-title">Fresh, down to its bone</h1>
+            <h2 className="header__content-description">
+              Serving you a supreme local deli experience in Kingston
+            </h2>
           </div>
         </div>
       </header>
 
       <section>
-        <div>
-          <h3>Sandwiches. Soups. The good stuff.</h3>
-          <p>
-            From a hearty omelette for a warm breakfast to a toasty sandwich to
-            go, there is a variety of mouth-watering food to choose from.
-          </p>
-          <button>See our menu</button>
+        <div className="section section--eat-in-overlay">
+          <div className="section__flex container">
+            <div>
+              <h3 className="section__subtitle">
+                Sandwiches. Soups. The good stuff.
+              </h3>
+              <p className="section__description section__description--with-overlay">
+                From a hearty omelette for a warm breakfast to a toasty sandwich
+                to go, there is a variety of mouth-watering food to choose from.
+              </p>
+            </div>
+            <a
+              href="./eat-in"
+              className="btn btn--primary-color btn--flex-expand"
+            >
+              See our menu
+            </a>
+          </div>
         </div>
-        <div>
-          <h3>Catering for all occasions.</h3>
-          <p>
-            Got mouths to feed? We got you covered with a huge assortment of
-            freshly prepared trays for everyone.
-            <button>Catering menu</button>
-            <button>Request a quote</button>
-          </p>
+        <div className="section section--catering-overlay">
+          <div className="section__flex container">
+            <div>
+              <h3 className="section__subtitle">Catering for all occasions.</h3>
+              <p className="section__description section__description--with-overlay">
+                Got mouths to feed? We got you covered with a huge assortment of
+                freshly prepared trays for everyone.
+              </p>
+            </div>
+            <a
+              href="./catering"
+              className="btn btn--primary-color btn--flex-expand"
+            >
+              Catering menu
+            </a>
+            <a
+              href="#contact-us"
+              className="btn btn--primary-color btn--flex-expand"
+            >
+              Request a quote
+            </a>
+          </div>
         </div>
       </section>
 
@@ -56,7 +83,7 @@ const Home: FC = () => {
         </div>
       </section>
 
-      <section>GALLERY</section>
+      {/* TODO: gallery */}
 
       <ContactUs />
     </div>

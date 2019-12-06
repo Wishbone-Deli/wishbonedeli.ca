@@ -1,15 +1,28 @@
 .btn {
+  background: $light-color;
   border: none;
   cursor: pointer;
   display: inline-block;
   font-size: $s-size;
-  margin: $m-size 0;
+  margin: $xxs-size $s-size;
   padding: $xs-size $m-size;
   text-align: center;
+  text-decoration: none;
+  max-width: 100%;
+}
+
+.btn--primary-color {
+  background: $primary-color;
+  color: $white;
 }
 
 .btn--submit {
   background: $primary-color;
   color: $white;
+  margin: $sm-size 0;
   width: 100%;
+}
+
+.btn--flex-expand {
+  flex-shrink: 0;
 }
