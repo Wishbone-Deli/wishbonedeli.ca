@@ -1,0 +1,82 @@
+.section {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  padding: $ml-size;
+  text-align: center;
+}
+
+.section--eat-in-overlay {
+  background: linear-gradient(
+      change-color($white, $alpha: 0.7),
+      change-color($white, $alpha: 0.7)
+    ),
+    url('/backgrounds/eat-in.jpg') no-repeat center center/cover;
+  min-height: 50vh;
+}
+
+.section--catering-overlay {
+  background: linear-gradient(
+      change-color($white, $alpha: 0.7),
+      change-color($white, $alpha: 0.7)
+    ),
+    url('/backgrounds/catering.jpg') no-repeat center center/cover;
+  min-height: 50vh;
+}
+
+.section__flex {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.section__divider {
+  align-items: center;
+  display: grid;
+  column-gap: $l-size;
+  justify-content: center;
+}
+
+.section__title {
+  color: $primary-color;
+  font-size: $m-size;
+  font-weight: bold;
+  margin: $s-size 0;
+  text-align: center;
+}
+
+.section__subtitle {
+  font-size: $sm-size;
+  margin: $s-size 0;
+  padding: 0 $s-size;
+}
+
+.section__description {
+  color: $light-black;
+  font-size: $s-size;
+  margin: $s-size 0;
+  padding: 0 $s-size;
+}
+
+.section__description--with-overlay {
+  color: $black;
+}
+
+@media (min-width: $desktop-breakpoint) {
+  .section:nth-child(even) > .section__flex > *:first-child {
+    order: 1;
+  }
+
+  .section__divider--2-columns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .section__divider-element:last-child {
+    text-align: left;
+  }
+
+  .section__flex {
+    flex-direction: row;
+  }
+}

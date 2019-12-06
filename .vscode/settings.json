@@ -25,7 +25,5 @@
       "autoFix": true
     }
   ],
-  "emmet.includeLanguages": {
-    "typescript": "typescriptreact"
-  }
+  "editor.wordWrap": "bounded"
 }

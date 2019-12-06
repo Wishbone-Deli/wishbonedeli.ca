@@ -1,0 +1,16 @@
+.form {
+  margin: $s-size 0;
+}
+
+.form__label {
+  font-size: $s-size;
+  font-weight: normal;
+  text-align: left;
+}
+
+.form__input {
+  line-height: $m-size;
+  margin: $s-size 0;
+  padding: 0 $xs-size;
+  width: 100%;
+}

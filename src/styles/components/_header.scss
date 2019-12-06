@@ -1,0 +1,28 @@
+.header {
+  align-items: center;
+  background: url('/backgrounds/header-background.jpg') no-repeat center
+    center/cover;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  justify-content: center;
+  text-align: center;
+}
+
+.header__content {
+  background: change-color($primary-color, $alpha: 0.87);
+  padding: $m-size 0;
+  margin: 0 $m-size;
+  color: $white;
+}
+
+.header__content-title {
+  font-weight: bold;
+  font-size: $m-size;
+  margin: $xxs-size $sm-size;
+}
+
+.header__content-description {
+  font-size: $s-size;
+  margin: $xxs-size $sm-size;
+}

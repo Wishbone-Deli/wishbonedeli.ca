@@ -1,0 +1,14 @@
+.table {
+  margin: $s-size 0;
+}
+
+.table__row {
+}
+
+.table__row--current {
+  font-weight: bold;
+}
+
+.table__entry {
+  padding-right: $xxs-size;
+}

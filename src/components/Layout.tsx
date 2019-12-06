@@ -3,6 +3,8 @@ import { NextSeo } from 'next-seo';
 import Navbar from './Navbar';
 import Footer from './Footer';
 
+import '../styles/style.scss';
+
 export type LayoutProps = {
   title: string;
   description: string;
