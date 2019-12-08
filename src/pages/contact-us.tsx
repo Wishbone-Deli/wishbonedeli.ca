@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import ContactUs from '../src/components/ContactUs';
-import Layout from '../src/components/Layout';
+import ContactUs from '../components/ContactUs';
+import Layout from '../components/Layout';
 
 const ContactUsPage: FunctionComponent = () => {
   const title = 'Wishbone Deli | Contact Us';

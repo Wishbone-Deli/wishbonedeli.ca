@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import EatIn from '../src/components/EatIn';
-import Layout from '../src/components/Layout';
+import EatIn from '../components/EatIn';
+import Layout from '../components/Layout';
 
 const HomePage: FunctionComponent = () => {
   const title = 'Wishbone Deli | Eat In';
