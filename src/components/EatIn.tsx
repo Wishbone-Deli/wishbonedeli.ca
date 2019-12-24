@@ -11,38 +11,31 @@ const eatInMenu = {
       items: [
         {
           name: 'Black Forest Ham and Cheese',
-          price: 5.99,
-          extraPrice: 1,
+          price: 6.99,
         },
         {
           name: 'Smoked Turkey Breast',
-          price: 5.99,
-          extraPrice: 1,
+          price: 6.99,
         },
         {
           name: 'Montreal-style Smoked Meat',
-          price: 5.99,
-          extraPrice: 1,
+          price: 6.99,
         },
         {
           name: 'Chicken Salad',
-          price: 5.49,
-          extraPrice: 1,
+          price: 6.49,
         },
         {
           name: 'Tuna Salad',
-          price: 5.49,
-          extraPrice: 1,
+          price: 6.49,
         },
         {
           name: 'Egg Salad',
-          price: 4.39,
-          extraPrice: 1,
+          price: 5.39,
         },
         {
           name: 'Veggie and Cheese',
-          price: 4.69,
-          extraPrice: 1,
+          price: 5.69,
         },
       ],
       addOns: [
@@ -56,6 +49,9 @@ const eatInMenu = {
           description:
             'Get a bowl of small soup for $1 off ($2.49) when you buy a sandwich or a special!',
         },
+        {
+          description: 'Get half a sandwich for $1 less.',
+        },
       ],
     },
     {
@@ -65,38 +61,31 @@ const eatInMenu = {
       items: [
         {
           name: 'Schnitzel on a Kaiser',
-          price: 6.49,
-          extraPrice: 1,
+          price: 7.49,
         },
         {
           name: 'Reuben',
-          price: 6.49,
-          extraPrice: 1,
+          price: 7.49,
         },
         {
           name: 'Melt Sandwiches',
-          price: 8.49,
-          extraPrice: 1,
+          price: 9.49,
         },
         {
           name: 'Grilled Cheese',
-          price: 3.49,
-          extraPrice: 1,
+          price: 4.49,
         },
         {
           name: 'Turkey Club',
-          price: 8.49,
-          extraPrice: 1,
+          price: 9.49,
         },
         {
           name: 'BLT',
-          price: 5.79,
-          extraPrice: 1,
+          price: 6.79,
         },
         {
           name: 'Roast Beef on a Kaiser',
-          price: 6.99,
-          extraPrice: 1,
+          price: 7.99,
           days: [2, 3, 4],
         },
       ],
@@ -104,6 +93,9 @@ const eatInMenu = {
         {
           description:
             'Get a bowl of small soup for $1 off ($2.49) when you buy a sandwich or a special!',
+        },
+        {
+          description: 'Get half a sandwich for $1 less.',
         },
       ],
     },

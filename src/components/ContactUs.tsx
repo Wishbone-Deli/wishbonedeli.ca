@@ -79,8 +79,8 @@ const ContactUs: FC = () => {
     <section id="contact-us">
       <div className="section">
         <div className="container">
-          <h2 className="section__title">Contact Us</h2>
-          <p className="section__description">
+          <h2 className="section__label section__label--title">Contact Us</h2>
+          <p className="section__label section__label--description">
             Got any questions or requests for us? Drop us a line and we will get
             back to you as soon as possible!
           </p>
@@ -163,8 +163,10 @@ const ContactUs: FC = () => {
                   : 'Thank you! We will get back to you as soon as we can.')}
             </div>
             <address className="section__divider-element">
-              <h2 className="section__subtitle">Our Address</h2>
-              <div className="section__description">
+              <h2 className="section__label section__label--subtitle">
+                Our Address
+              </h2>
+              <div className="section__label section__label--description">
                 Wishbone Delicatessen
                 <br />
                 1407 John Counter Blvd
@@ -172,11 +174,15 @@ const ContactUs: FC = () => {
                 Kingston, ON Canada K7K 6A9
               </div>
 
-              <h2 className="section__subtitle">Our Phone Number</h2>
-              <div className="section__description">(613) 544-5446</div>
+              <h2 className="section__label section__label--subtitle">
+                Our Phone Number
+              </h2>
+              <div className="section__label section__label--description">
+                (613) 544-5446
+              </div>
 
-              <h2 className="section__subtitle">Hours</h2>
-              <div className="section__description">
+              <h2 className="section__label section__label--subtitle">Hours</h2>
+              <div className="section__label section__label--description">
                 <table className="table">
                   {/* TODO: tests */}
                   <tbody>

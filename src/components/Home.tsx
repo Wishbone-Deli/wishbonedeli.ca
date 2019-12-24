@@ -31,48 +31,48 @@ const Home: FC = () => {
         </div>
       </header>
 
-      <section>
-        <div className="section section--eat-in-overlay">
-          <div className="section__flex container">
-            <div>
-              <h3 className="section__subtitle">
-                Sandwiches. Soups. The good stuff.
-              </h3>
-              <p className="section__description section__description--with-overlay">
-                From a hearty omelette for a warm breakfast to a toasty sandwich
-                to go, there is a variety of mouth-watering food to choose from.
-              </p>
-            </div>
-            <a
-              href="./eat-in"
-              className="btn btn--primary-color btn--flex-expand"
-            >
-              See our menu
-            </a>
+      <section className="section section--eat-in-overlay">
+        <div className="section__flex container">
+          <div>
+            <h3 className="section__label section__label--subtitle">
+              Sandwiches. Soups. The good stuff.
+            </h3>
+            <p className="section__label section__label--description section__label--over-overlay">
+              From a hearty omelette for a warm breakfast to a toasty sandwich
+              to go, there is a variety of mouth-watering food to choose from.
+            </p>
           </div>
+          <a
+            href="./eat-in"
+            className="btn btn--primary-color btn--flex-expand"
+          >
+            See our menu
+          </a>
         </div>
-        <div className="section section--catering-overlay">
-          <div className="section__flex container">
-            <div>
-              <h3 className="section__subtitle">Catering for all occasions.</h3>
-              <p className="section__description section__description--with-overlay">
-                Got mouths to feed? We got you covered with a huge assortment of
-                freshly prepared trays for everyone.
-              </p>
-            </div>
-            <a
-              href="./catering"
-              className="btn btn--primary-color btn--flex-expand"
-            >
-              Catering menu
-            </a>
-            <a
-              href="#contact-us"
-              className="btn btn--primary-color btn--flex-expand"
-            >
-              Request a quote
-            </a>
+      </section>
+      <section className="section section--catering-overlay">
+        <div className="section__flex container">
+          <div>
+            <h3 className="section__label section__label--subtitle">
+              Catering for all occasions.
+            </h3>
+            <p className="section__label section__label--description section__label--over-overlay">
+              Got mouths to feed? We got you covered with a huge assortment of
+              freshly prepared trays for everyone.
+            </p>
           </div>
+          <a
+            href="./catering"
+            className="btn btn--primary-color btn--flex-expand"
+          >
+            Catering menu
+          </a>
+          <a
+            href="#contact-us"
+            className="btn btn--primary-color btn--flex-expand"
+          >
+            Request a quote
+          </a>
         </div>
       </section>
 

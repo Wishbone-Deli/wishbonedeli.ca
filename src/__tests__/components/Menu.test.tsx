@@ -71,9 +71,9 @@ describe('Menu', () => {
     });
 
     it('displays the correct amount of categories', () => {
-      const { container } = render(<Menu {...menuBase} />);
+      const { getByText } = render(<Menu {...menuBase} />);
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(container.firstChild!.childNodes).toHaveLength(
+      expect(getByText(menuBase.name).parentNode!.childNodes).toHaveLength(
         menuBase.categories.length + 1,
       );
     });
@@ -91,11 +91,11 @@ describe('Menu', () => {
     });
 
     it('displays the correct amount of items', () => {
-      const { container } = render(
+      const { getByText } = render(
         <Menu {...{ ...menuBase, categories: [categoryBase] }} />,
       );
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      expect(container.firstChild!.lastChild!.childNodes).toHaveLength(
+      expect(getByText(categoryBase.name).parentNode!.childNodes).toHaveLength(
         menuBase.categories[0].items.length + 1,
       );
     });
@@ -150,7 +150,7 @@ describe('Menu', () => {
           }}
         />,
       );
-      expect(getByText(itemBase.price.toString())).toBeDefined();
+      expect(getByText(itemBase.price.toFixed(2))).toBeDefined();
     });
 
     it('displays the plus-size price', () => {
@@ -164,7 +164,11 @@ describe('Menu', () => {
       );
       expect(
         getByText(
-          (itemWithExtraPrice.price + itemWithExtraPrice.extraPrice).toString(),
+          RegExp(
+            (itemWithExtraPrice.price + itemWithExtraPrice.extraPrice).toFixed(
+              2,
+            ),
+          ),
         ),
       ).toBeDefined();
     });

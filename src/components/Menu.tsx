@@ -41,13 +41,31 @@ const Menu: FC<MenuProps> = ({ name, categories }: MenuProps) => {
     extraPrice,
     days,
   }: Item): ReactElement => (
-    <div key={name}>
-      <h4>{name}</h4>
-      <h4>{price}</h4>
-      {extraPrice && <h4>{price + extraPrice}</h4>}
-      {description && <p>{description}</p>}
+    <div key={name} className="menu__item">
+      <h4 className="menu__item-label menu__item-label--name">{name}</h4>
+      {description && (
+        <p className="menu__item-label menu__item-label--description">
+          {description}
+        </p>
+      )}
+
+      {extraPrice ? (
+        <>
+          <h4 className="menu__item-label menu__item-label--price">
+            Small: {price.toFixed(2)}
+          </h4>
+          <h4 className="menu__item-label menu__item-label--price">
+            Large: {(price + extraPrice).toFixed(2)}
+          </h4>
+        </>
+      ) : (
+        <h4 className="menu__item-label menu__item-label--price">
+          {price.toFixed(2)}
+        </h4>
+      )}
+
       {days && (
-        <p>
+        <p className="menu__item-label menu__item-label--description">
           Available on{' '}
           {days.map(
             day =>
@@ -56,21 +74,27 @@ const Menu: FC<MenuProps> = ({ name, categories }: MenuProps) => {
           )}
         </p>
       )}
+
       {/* TODO: categorize by days for category that only have day-exclusive items */}
     </div>
   );
 
   const buildAddOn = ({ name, price }: AddOn): ReactElement => (
     <div key={name}>
-      <h5>{name}</h5>
-      <h5>{price}</h5>
+      <h5 className="menu__item-label menu__item-label--name">{name}</h5>
+      <h5 className="menu__item-label menu__item-label--price">
+        {price.toFixed(2)}
+      </h5>
     </div>
   );
 
   const buildPromo = ({ description }: Promo): ReactElement => (
-    <div key={description}>
-      <h3>{description}</h3>
-    </div>
+    <h3
+      key={description}
+      className="menu__category-label menu__category-label--promo"
+    >
+      {description}
+    </h3>
   );
 
   const buildCategory = ({
@@ -80,20 +104,39 @@ const Menu: FC<MenuProps> = ({ name, categories }: MenuProps) => {
     addOns,
     promos,
   }: Category): ReactElement => (
-    <div key={name}>
-      <h3>{name}</h3>
-      {promos && promos.map(buildPromo)}
-      {description && <p>{description}</p>}
+    <section key={name} className="menu__category">
+      <h3 className="menu__category-label menu__category-label--name">
+        {name}
+      </h3>
+
+      {description && (
+        <p className="menu__category-label menu__category-label--description">
+          {description}
+        </p>
+      )}
+
       {items.map(buildItem)}
-      {addOns && addOns.map(buildAddOn)}
-    </div>
+
+      {addOns && (
+        <>
+          <h3 className="menu__category-label menu__category-label--add-on">
+            Add Ons
+          </h3>
+          {addOns.map(buildAddOn)}
+        </>
+      )}
+
+      {promos && promos.map(buildPromo)}
+    </section>
   );
 
   return (
-    <div>
-      <h2>{name}</h2>
-      {categories.map(buildCategory)}
-    </div>
+    <section className="menu">
+      <div className="container container--small">
+        <h2 className="menu__title">{name}</h2>
+        {categories.map(buildCategory)}
+      </div>
+    </section>
   );
 };
 
