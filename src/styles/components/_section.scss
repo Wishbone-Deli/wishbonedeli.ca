@@ -1,3 +1,5 @@
+// usage of flex here is only meant to center the child/children inside;
+// use section__flex for configuring layout
 .section {
   align-items: center;
   display: flex;
@@ -24,6 +26,7 @@
   min-height: 50vh;
 }
 
+// need to be applied to container-like enveloping elements
 .section__flex {
   align-items: center;
   display: flex;
@@ -33,38 +36,42 @@
 
 .section__divider {
   align-items: center;
-  display: grid;
   column-gap: $l-size;
+  display: grid;
   justify-content: center;
 }
 
-.section__title {
+.section__divider-element {
+  padding: 0 $s-size;
+}
+
+.section__label {
+  margin: $s-size 0;
+}
+
+.section__label--title {
   color: $primary-color;
   font-size: $m-size;
   font-weight: bold;
-  margin: $s-size 0;
   text-align: center;
 }
 
-.section__subtitle {
+.section__label--subtitle {
   font-size: $sm-size;
-  margin: $s-size 0;
-  padding: 0 $s-size;
 }
 
-.section__description {
+.section__label--description {
   color: $light-black;
   font-size: $s-size;
-  margin: $s-size 0;
-  padding: 0 $s-size;
 }
 
-.section__description--with-overlay {
+.section__label--over-overlay {
   color: $black;
 }
 
 @media (min-width: $desktop-breakpoint) {
-  .section:nth-child(even) > .section__flex > *:first-child {
+  // take the first child and apply it to the end
+  .section:nth-child(odd) > .section__flex > *:first-child {
     order: 1;
   }
 

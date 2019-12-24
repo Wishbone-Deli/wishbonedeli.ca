@@ -1,4 +1,8 @@
 .container {
   margin: 0 auto;
-  max-width: 126rem;
+  max-width: 1260px;
+}
+
+.container--small {
+  max-width: 760px;
 }

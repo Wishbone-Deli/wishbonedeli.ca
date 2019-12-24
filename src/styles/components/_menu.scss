@@ -1,0 +1,64 @@
+.menu {
+  padding: $m-size;
+}
+
+.menu__title {
+  @extend .section__label--title;
+}
+
+.menu__category {
+  margin: $m-size 0;
+}
+
+.menu__category-label {
+  @extend .section__label;
+}
+
+.menu__category-label--add-on {
+  font-size: $s-size;
+}
+
+.menu__category-label--name {
+  @extend .section__label--subtitle;
+}
+
+.menu__category-label--description {
+  @extend .section__label--description;
+}
+
+.menu__category-label--promo {
+  color: $dark-grey;
+  font-size: $s-size;
+}
+
+.menu__item {
+  margin: $s-size 0;
+}
+
+.menu__item:after {
+  border-bottom: 1px solid $grey;
+  content: '';
+  display: block;
+  margin: $s-size auto;
+}
+
+.menu__item:last-child:after {
+  content: none;
+}
+
+.menu__item-label {
+  margin: $xxs-size 0;
+}
+
+.menu__item-label--name {
+  font-size: $s-size;
+}
+
+.menu__item-label--description {
+  color: $light-black;
+  font-size: $s-size;
+}
+
+.menu__item-label--price {
+  font-size: $s-size;
+}
