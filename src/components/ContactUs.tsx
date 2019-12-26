@@ -4,6 +4,11 @@ import Fadeloader from 'react-spinners/FadeLoader';
 import GoogleMapReact, { Coords, Props } from 'google-map-react';
 import moment from 'moment';
 import { Message } from '../server/message';
+import {
+  todayIsBetweenClosedDays,
+  closedDaysList,
+  ClosedNotification,
+} from './ClosedToast';
 
 const ContactUs: FC = () => {
   const [name, setName] = useState('');
@@ -205,6 +210,15 @@ const ContactUs: FC = () => {
                     ))}
                   </tbody>
                 </table>
+                {/* TODO: API call here */}
+                {closedDaysList
+                  .filter(todayIsBetweenClosedDays)
+                  .map(closedDays => (
+                    <ClosedNotification
+                      key={closedDays.startDate}
+                      {...closedDays}
+                    />
+                  ))}
                 Please note that we are closed on public holidays.
               </div>
             </address>
