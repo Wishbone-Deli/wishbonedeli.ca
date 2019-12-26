@@ -1,9 +1,10 @@
 /* eslint-disable */
 require('dotenv').config();
 const withSass = require('@zeit/next-sass');
+const withCSS = require('@zeit/next-css');
 const Dotenv = require('dotenv-webpack');
 
-module.exports = withSass({
+module.exports = withCSS(withSass({
   webpack: cfg => {
     // setup polyfills
     const originalEntry = cfg.entry;
@@ -26,4 +27,4 @@ module.exports = withSass({
 
     return cfg;
   }
-});
+}));
