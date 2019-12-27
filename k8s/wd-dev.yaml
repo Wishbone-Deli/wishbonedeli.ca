@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wishbone-deli-app-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      wd: web
+  template:
+    metadata:
+      labels:
+        wd: web
+        env: dev
+    spec:
+      containers:
+        - name: wishbone-deli-site
+          image: gcr.io/wishbone-delicatessen/wishbone-deli:1.0.0
+          imagePullPolicy: Always
+          envFrom:
+            - secretRef:
+                name: wd-secret
