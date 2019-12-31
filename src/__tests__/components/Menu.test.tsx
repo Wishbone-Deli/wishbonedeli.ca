@@ -104,7 +104,7 @@ describe('Menu', () => {
       const { getByText } = render(<Menu {...menuBase} />);
       categoryWithAddOns.addOns.forEach(addOn => {
         expect(getByText(addOn.name)).toBeDefined();
-        expect(getByText(addOn.price.toString())).toBeDefined();
+        expect(getByText(addOn.price.toFixed(2))).toBeDefined();
       });
     });
 
