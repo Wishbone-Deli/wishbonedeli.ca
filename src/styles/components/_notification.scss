@@ -1,10 +1,11 @@
 .notification {
   background: $primary-color;
-  padding: $sm-size;
 }
 
 .notification__body {
   @extend .section__label;
   @extend .section__label--description;
+  background: $primary-color;
   color: $white !important; // oof
+  padding: $sm-size;
 }

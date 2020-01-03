@@ -2,8 +2,6 @@ import React, { useEffect, FC } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import moment from 'moment';
 
-import 'react-toastify/scss/main.scss';
-
 export type ClosedDays = {
   type: 'CLOSED' | string;
   message?: string;
@@ -28,13 +26,11 @@ export const ClosedNotification: FC<ClosedDays> = ({
   endDate,
 }: ClosedDays) => {
   return (
-    <div className="notification">
-      <div className="notification__body">
-        We are <strong>CLOSED</strong> from{' '}
-        <strong>{moment(startDate).format('MMMM Do YYYY')}</strong> to{' '}
-        <strong>{moment(endDate).format('MMMM Do YYYY')}</strong>.
-        {message ? ' ' + message : ''}
-      </div>
+    <div className="notification__body">
+      We are <strong>CLOSED</strong> from{' '}
+      <strong>{moment(startDate).format('MMMM Do YYYY')}</strong> to{' '}
+      <strong>{moment(endDate).format('MMMM Do YYYY')}</strong>.
+      {message ? ' ' + message : ''}
     </div>
   );
 };
@@ -55,6 +51,7 @@ const ClosedToast: FC = () => {
         toast(<ClosedNotification {...closedDays} />, {
           position: toast.POSITION.BOTTOM_CENTER,
           // when the toast is unmounted, the app will assume that the notification has been acknowledged and won't show again for the remainder of the session
+          className: 'notification',
           onClose: () => {
             sessionStorage.setItem(ackKey, JSON.stringify(true));
           },
