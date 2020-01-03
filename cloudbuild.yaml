@@ -1,0 +1,11 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build',
+         '--build-arg',
+         'RECAPTCHA_API_KEY=${_RECAPTCHA_API_KEY}',
+         '--build-arg',
+         'GOOGLE_MAPS_JAVASCRIPT_API_KEY=${_GOOGLE_MAPS_JAVASCRIPT_API_KEY}', '-t',
+         '${_IMAGE_TAG}',
+         '.']
+images:
+- ${_IMAGE_TAG}

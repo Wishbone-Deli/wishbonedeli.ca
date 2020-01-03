@@ -22,9 +22,16 @@ module.exports = withCSS(withSass({
     }
 
     // configure dotenv
-    cfg.plugins = cfg.plugins || [];
-    cfg.plugins = [...cfg.plugins, new Dotenv()];
+    if (process.env.NODE_ENV !== 'production') {
+      cfg.plugins = cfg.plugins || [];
+      cfg.plugins = [...cfg.plugins, new Dotenv()];
+    }
 
     return cfg;
+  },
+
+  env: process.env.NODE_ENV === 'production' && {
+    RECAPTCHA_API_KEY: process.env.RECAPTCHA_API_KEY,
+    GOOGLE_MAPS_JAVASCRIPT_API_KEY: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY
   }
 }));
