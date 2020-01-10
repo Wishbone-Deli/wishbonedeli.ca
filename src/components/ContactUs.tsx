@@ -3,6 +3,8 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import Fadeloader from 'react-spinners/FadeLoader';
 import GoogleMapReact, { Coords, Props } from 'google-map-react';
 import moment from 'moment';
+import gql from 'graphql-tag';
+import { useMutation } from 'urql';
 import { Message } from '../server/message';
 import {
   todayIsBetweenClosedDays,
@@ -10,13 +12,37 @@ import {
   ClosedNotification,
 } from './ClosedToast';
 
+// css changes after submit wtf
+
+const CREATE_MESSAGE = gql`
+  mutation CreateMessage(
+    $name: String
+    $phoneNumber: String
+    $email: String!
+    $text: String!
+  ) {
+    createMessage(
+      name: $name
+      phoneNumber: $phoneNumber
+      email: $email
+      text: $text
+    ) {
+      name
+      phoneNumber
+      email
+      text
+    }
+  }
+`;
+
 const ContactUs: FC = () => {
   const [name, setName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [email, setEmail] = useState('');
   const [text, setText] = useState('');
-  const [resStatus, setResStatus] = useState(100);
-  const [loading, setLoading] = useState(false);
+  const [{ fetching, error, data = undefined }, executeMutation] = useMutation(
+    CREATE_MESSAGE,
+  );
 
   const recaptchaRef = createRef<ReCAPTCHA>();
 
@@ -36,22 +62,7 @@ const ContactUs: FC = () => {
       phoneNumber !== '' && { phoneNumber },
     );
 
-    let htmlStatus;
-    setLoading(true);
-    try {
-      const { status } = await fetch(`http://localhost:3000/message`, {
-        method: 'POST',
-        body: JSON.stringify(msg),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      htmlStatus = status;
-    } catch (e) {
-      htmlStatus = 0;
-    }
-    setLoading(false);
-    setResStatus(htmlStatus);
+    executeMutation(msg);
   };
 
   const position: Coords = { lat: 44.260658, lng: -76.518256 };
@@ -157,15 +168,14 @@ const ContactUs: FC = () => {
                   <Fadeloader
                     data-testid="spinner"
                     color={'#116133'}
-                    loading={loading}
+                    loading={fetching}
                   />
                 </div>
               </form>
-              {loading === false &&
-                (resStatus >= 200 || resStatus === 0) &&
-                (resStatus >= 400 || resStatus === 0
-                  ? 'Something went wrong. Please email us at wishbone.delicatessen@gmail.com instead.'
-                  : 'Thank you! We will get back to you as soon as we can.')}
+              {!fetching && error
+                ? 'Something went wrong. Please email us at wishbone.delicatessen@gmail.com instead.'
+                : data &&
+                  'Thank you! We will get back to you as soon as we can.'}
             </div>
             <address className="section__divider-element">
               <h2 className="section__label section__label--subtitle">

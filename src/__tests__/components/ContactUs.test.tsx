@@ -1,5 +1,8 @@
-import React, { ReactElement, Component } from 'react';
+import React, { ReactElement, Component, FC } from 'react';
 import { render, fireEvent } from '@testing-library/react';
+import { print } from 'graphql/language/printer';
+import { Client, defaultExchanges, Provider } from 'urql';
+import gql from 'graphql-tag';
 import ContactUs from '../../components/ContactUs';
 
 jest.mock('react-google-recaptcha', () => {
@@ -11,6 +14,22 @@ jest.mock('react-google-recaptcha', () => {
 });
 
 describe('<ContactUs>', () => {
+  let ContactUsWrapper: FC;
+
+  beforeAll(() => {
+    const client = new Client({
+      url: 'http://localhost:3000/api',
+      exchanges: defaultExchanges,
+    });
+
+    // eslint-disable-next-line react/display-name
+    ContactUsWrapper = (): ReactElement => (
+      <Provider value={client}>
+        <ContactUs />
+      </Provider>
+    );
+  });
+
   describe('for requests', () => {
     const fakeFetch = jest
       .fn()
@@ -28,7 +47,9 @@ describe('<ContactUs>', () => {
 
     describe('not valid', () => {
       it('displays an error if the endpoint fails to send the message', async () => {
-        const { getByRole, findByText, getByLabelText } = render(<ContactUs />);
+        const { getByRole, findByText, getByLabelText } = render(
+          <ContactUsWrapper />,
+        );
 
         fakeFetch.mockImplementation(() => Promise.resolve({ status: 400 }));
 
@@ -46,11 +67,15 @@ describe('<ContactUs>', () => {
       });
 
       it('displays an error if fails to send a request', async () => {
-        const { getByRole, findByText, getByLabelText } = render(<ContactUs />);
+        const { getByRole, findByText, getByLabelText } = render(
+          <ContactUsWrapper />,
+        );
 
         fakeFetch.mockImplementation(() => Promise.reject(new Error()));
 
-        fireEvent.change(getByLabelText('Name'), { target: { value: name } });
+        fireEvent.change(getByLabelText('Name'), {
+          target: { value: name },
+        });
         fireEvent.change(getByLabelText('Phone Number'), {
           target: { value: phoneNumber },
         });
@@ -65,8 +90,37 @@ describe('<ContactUs>', () => {
     });
 
     describe('with valid inputs', () => {
+      let query: string;
+
       beforeEach(() => {
-        fakeFetch.mockImplementation(() => Promise.resolve({ status: 200 }));
+        fakeFetch.mockImplementation(() =>
+          Promise.resolve({
+            json: () => ({ data: {} }), // syntax for urql mock response
+          }),
+        );
+
+        // note: the urql fetchExchange inserts `__typename` as a field into queries
+        query = print(gql`
+          mutation CreateMessage(
+            $name: String
+            $phoneNumber: String
+            $email: String!
+            $text: String!
+          ) {
+            createMessage(
+              name: $name
+              phoneNumber: $phoneNumber
+              email: $email
+              text: $text
+            ) {
+              name
+              phoneNumber
+              email
+              text
+              __typename
+            }
+          }
+        `);
       });
 
       const expectCorrectRequest = (
@@ -76,31 +130,35 @@ describe('<ContactUs>', () => {
         expectedEndpoint: string,
       ): void => {
         expect(fetchMock.mock.calls[0][0]).toBe(expectedEndpoint);
-        (Object.keys(expectedRequest) as Array<
-          keyof typeof expectedRequest
-        >).forEach(key => {
-          if (key !== 'body') {
-            expect(fetchMock.mock.calls[0][1][key]).toEqual(
-              expectedRequest[key],
-            );
-          }
+
+        const req = fetchMock.mock.calls[0][1];
+        expect(req).toHaveProperty('body');
+        expect(JSON.parse(req.body)).toMatchObject({ query });
+        expect(JSON.parse(req.body)).toMatchObject({
+          variables: expectedRequest.variables,
         });
-        expect(JSON.parse(fetchMock.mock.calls[0][1].body)).toEqual(
-          JSON.parse(expectedRequest.body),
-        );
+
+        // expect(JSON.parse(fetchMock.mock.calls[0][1].query)).toEqual(
+        //   JSON.parse(expectedRequest.body),
+        // );
+        // expect(JSON.parse(fetchMock.mock.calls[0][1].variables)).toEqual(
+        //   JSON.parse(expectedRequest.variables),
+        // );
       };
 
       it('sends a request to the contact us endpoint', async () => {
         const { getByRole, getByLabelText, getByTestId, findByText } = render(
-          <ContactUs />,
+          <ContactUsWrapper />,
         );
 
-        const expectedEndpoint = 'http://localhost:3000/message';
+        const expectedEndpoint = 'http://localhost:3000/api';
         const expectedRequest = {
-          method: 'POST',
-          body: JSON.stringify({ name, phoneNumber, email, text }),
-          headers: {
-            'Content-Type': 'application/json',
+          query,
+          variables: {
+            name,
+            phoneNumber,
+            email,
+            text,
           },
         };
 
@@ -127,15 +185,16 @@ describe('<ContactUs>', () => {
 
       it('sends a request to the contact us endpoint without name', async () => {
         const { getByRole, findByText, getByLabelText, getByTestId } = render(
-          <ContactUs />,
+          <ContactUsWrapper />,
         );
 
-        const expectedEndpoint = 'http://localhost:3000/message';
+        const expectedEndpoint = 'http://localhost:3000/api';
         const expectedRequest = {
-          method: 'POST',
-          body: JSON.stringify({ phoneNumber, email, text }),
-          headers: {
-            'Content-Type': 'application/json',
+          query,
+          variables: {
+            phoneNumber,
+            email,
+            text,
           },
         };
 
@@ -161,15 +220,16 @@ describe('<ContactUs>', () => {
 
       it('sends a request to the contact us endpoint without phone number', async () => {
         const { getByRole, findByText, getByLabelText, getByTestId } = render(
-          <ContactUs />,
+          <ContactUsWrapper />,
         );
 
-        const expectedEndpoint = 'http://localhost:3000/message';
+        const expectedEndpoint = 'http://localhost:3000/api';
         const expectedRequest = {
-          method: 'POST',
-          body: JSON.stringify({ name, email, text }),
-          headers: {
-            'Content-Type': 'application/json',
+          query,
+          variables: {
+            name,
+            email,
+            text,
           },
         };
 
