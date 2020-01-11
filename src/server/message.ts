@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { createTransport } from 'nodemailer';
 import { config } from 'dotenv';
 import {
@@ -46,13 +45,12 @@ export const buildTransportConfig = (): Options & {
 /**
  * Constructs an email to send from the req object
  */
-export const buildMessage = (req: Request): Mail.Options => {
-  const {
-    name = 'Not provided',
-    phoneNumber = 'Not provided',
-    email,
-    text,
-  } = req.body as Message;
+export const buildMessage = ({
+  name = 'Not provided',
+  phoneNumber = 'Not provided',
+  email,
+  text,
+}: Message): Mail.Options => {
   const msgSource = 'www.wishbonedeli.ca';
   let formattedText = `Reply to email to respond.
 
@@ -85,24 +83,14 @@ ${text}`;
 /**
  * Creates a message and sends it
  */
-export const createMessage = async (
-  req: Request,
-  res: Response,
-): Promise<void> => {
-  let status;
+export const createMessage = async (msg: Message): Promise<Message> => {
   const transportConfig = buildTransportConfig();
-
   const transporter = createTransport(transportConfig);
-  try {
-    await transporter.verify();
+  await transporter.verify();
 
-    const mail = buildMessage(req);
-    await transporter.sendMail(mail);
-    status = 200;
-  } catch (e) {
-    console.log(e);
-    status = 500;
-  }
+  const mail = buildMessage(msg);
+  await transporter.sendMail(mail);
   transporter.close();
-  res.sendStatus(status);
+
+  return msg;
 };

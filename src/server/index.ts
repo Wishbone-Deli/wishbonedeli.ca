@@ -1,6 +1,8 @@
 import express from 'express';
 import next from 'next';
-import { createMessage } from './message';
+import graphqlHTTP from 'express-graphql';
+import { root } from './root';
+import { schema } from './schema';
 
 const port = parseInt(process.env.PORT || '3000', 10);
 const dev = process.env.NODE_ENV !== 'production';
@@ -9,11 +11,7 @@ const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
   const server = express();
-
-  server.use(express.json());
-  server.use(express.urlencoded({ extended: true }));
-
-  server.post('/message', createMessage);
+  server.use('/api', graphqlHTTP({ schema, rootValue: root, graphiql: true }));
 
   server.all('*', (req, res) => {
     return handle(req, res);

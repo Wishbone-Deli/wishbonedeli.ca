@@ -1,11 +1,15 @@
 import * as Message from '../../server/message';
+import { root } from '../../server/root';
+import { schema } from '../../server/schema';
 import nodemailer, { createTransport } from 'nodemailer';
-import { Request, Response } from 'express';
+import express, { Express } from 'express';
 import Mail from 'nodemailer/lib/mailer';
 import * as dotenv from 'dotenv';
+import request from 'supertest';
+import graphqlHTTP from 'express-graphql';
 
 describe('message', () => {
-  afterAll(() => {
+  afterEach(() => {
     jest.restoreAllMocks();
   });
 
@@ -32,7 +36,7 @@ describe('message', () => {
       phoneNumber: string,
       email: string,
       text: string;
-    let req: Request;
+    let msg: Message.Message;
     let expectedMessageTemplate: Mail.Options;
 
     beforeEach(() => {
@@ -43,7 +47,7 @@ describe('message', () => {
       phoneNumber = '555 555 5555';
       email = 'john.doe@gmail.com';
       text = "This is John Doe's message";
-      req = { body: { name, phoneNumber, email, text } } as Request;
+      msg = { name, phoneNumber, email, text };
       expectedMessageTemplate = {
         from: email,
         replyTo: email,
@@ -53,7 +57,7 @@ describe('message', () => {
     });
 
     it('builds a correct message', () => {
-      const builtMsg = Message.buildMessage(req);
+      const builtMsg = Message.buildMessage(msg);
       let expectedText = `
 Reply to email to respond.
 <br>
@@ -85,8 +89,8 @@ ${text}
     });
 
     it('builds a correct message without a name', () => {
-      delete req.body.name;
-      const builtMsg = Message.buildMessage(req);
+      delete msg.name;
+      const builtMsg = Message.buildMessage(msg);
       let expectedText = `
 Reply to email to respond.
 <br>
@@ -118,8 +122,8 @@ ${text}
     });
 
     it('builds a correct message without a phone number', () => {
-      delete req.body.phoneNumber;
-      const builtMsg = Message.buildMessage(req);
+      delete msg.phoneNumber;
+      const builtMsg = Message.buildMessage(msg);
       let expectedText = `
 Reply to email to respond.
 <br>
@@ -153,8 +157,7 @@ ${text}
 
   describe('mailing', () => {
     let name, phoneNumber, email, text;
-    let req: Request;
-    let res: Response;
+    let msg: Message.Message;
     let buildTransportConfigSpy: jest.SpyInstance;
     let buildMessageSpy: jest.SpyInstance;
     let sendMailSpy: jest.SpyInstance;
@@ -165,14 +168,11 @@ ${text}
       phoneNumber = '555 555 5555';
       email = 'john.doe@gmail.com';
       text = "This is John Doe's message";
-      req = { body: { name, phoneNumber, email, text } } as Request;
-      res = ({
-        sendStatus: jest.fn(),
-      } as unknown) as Response;
+      msg = { name, phoneNumber, email, text };
 
       buildTransportConfigSpy = jest
         .spyOn(Message, 'buildTransportConfig')
-        .mockReturnValue({
+        .mockReturnValueOnce({
           host: 'smtp.mailtrap.io',
           port: 2525,
           auth: {
@@ -184,7 +184,7 @@ ${text}
         .spyOn(Message, 'buildMessage')
         .mockImplementationOnce(() => {
           return {
-            ...jest.requireActual('../../server/message').buildMessage(req),
+            ...jest.requireActual('../../server/message').buildMessage(msg),
             to: 'foo@bar.com',
           };
         });
@@ -193,14 +193,54 @@ ${text}
     });
 
     it('calls appropriate helper functions', async () => {
-      await Message.createMessage(req, res);
+      await Message.createMessage(msg);
       expect(buildTransportConfigSpy).toBeCalled();
       expect(createTransportSpy).toBeCalledWith(
         buildTransportConfigSpy.mock.results[0].value,
       );
       expect(buildMessageSpy).toBeCalled();
       expect(sendMailSpy).toBeCalledWith(buildMessageSpy.mock.results[0].value);
-      expect(res.sendStatus).toBeCalledWith(200);
+    });
+  });
+
+  describe('route', () => {
+    let server: Express;
+
+    beforeAll(() => {
+      server = express();
+      server.use(
+        '/graphql',
+        graphqlHTTP({ schema, rootValue: root, graphiql: true }),
+      );
+    });
+
+    beforeEach(() => {
+      jest.spyOn(Message, 'buildTransportConfig').mockReturnValueOnce({
+        host: 'smtp.mailtrap.io',
+        port: 2525,
+        auth: {
+          user: 'b27d43731280cb',
+          pass: '2115ba060a78cf',
+        },
+      });
+    });
+
+    it('returns 200 with valid input', () => {
+      const query = `
+      mutation {
+        createMessage(name: "Jack Doe", phoneNumber: "555 555 5555", email: "john.doe@gmail.com", text: "This is John Doe's message") {
+          name
+          phoneNumber
+          email
+          text
+        }
+      }
+      `;
+
+      return request(server)
+        .post('/graphql')
+        .send({ query })
+        .expect(200);
     });
   });
 });
