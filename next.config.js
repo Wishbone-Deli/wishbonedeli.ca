@@ -32,6 +32,7 @@ module.exports = withCSS(withSass({
 
   env: process.env.NODE_ENV === 'production' && {
     RECAPTCHA_API_KEY: process.env.RECAPTCHA_API_KEY,
-    GOOGLE_MAPS_JAVASCRIPT_API_KEY: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY
+    GOOGLE_MAPS_JAVASCRIPT_API_KEY: process.env.GOOGLE_MAPS_JAVASCRIPT_API_KEY,
+    API_DOMAIN: process.env.API_DOMAIN
   }
 }));

@@ -4,7 +4,7 @@ import { AppProps } from 'next/app';
 import { Client, defaultExchanges, Provider } from 'urql';
 
 const client = new Client({
-  url: 'http://localhost:3000/api',
+  url: `${process.env.API_DOMAIN}/api`,
   exchanges: defaultExchanges,
 });
 
